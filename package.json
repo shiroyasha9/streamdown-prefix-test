@@ -10,9 +10,14 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@streamdown/cjk": "^1.0.2",
+    "@streamdown/code": "^1.1.0",
+    "@streamdown/math": "^1.0.2",
+    "@streamdown/mermaid": "^1.0.2",
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "streamdown": "^2.4.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
