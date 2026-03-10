@@ -36,7 +36,7 @@ Unclear whether this should be flagged as a streamdown issue or a tailwindcss is
 
 ### `with-prefix` - all styling broken
 
-![with prefix](public/images/with-prefix.png)
+![with prefix](public/images/with-prefix-tw.png)
 
 ## Important: Clear Cache After Branch Switches
 
