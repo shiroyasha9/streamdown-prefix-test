@@ -8,6 +8,8 @@ import { Streamdown } from "streamdown";
 
 export const StreamdownRenderer = ({ children }: { children: string }) => {
   return (
-    <Streamdown plugins={{ code, math, mermaid, cjk }}>{children}</Streamdown>
+    <Streamdown plugins={{ code, math, mermaid, cjk }} prefix="tw">
+      {children}
+    </Streamdown>
   );
 };
