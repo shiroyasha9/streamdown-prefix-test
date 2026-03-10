@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Streamdown Repro Repo
 
-## Getting Started
+This repo reproduces two issues with [streamdown](https://github.com/vercel/streamdown).
 
-First, run the development server:
+## Issues
+
+### 1. Shadcn Theming Assumption
+
+Without the `globals.css` changes that shadcn provides (CSS custom properties for colors, border-radius, etc.), the styling of all components - particularly cards like code blocks - looks off and has no proper styling.
+
+The [official streamdown docs](https://streamdown.ai) don't mention shadcn anywhere, so the expectation is that it shouldn't be required. Is this dependency intentional?
+
+### 2. Prefix Breaks Tailwind Scanning
+
+When using a Tailwind CSS prefix (e.g. `tw`), Tailwind scans the configured content directories for **prefixed** class names - it looks for `tw:flex` instead of `flex`. Since streamdown's internal classes are unprefixed, none are detected and all styling breaks. This makes the `prefix` prop effectively useless.
+
+Unclear whether this should be flagged as a streamdown issue or a tailwindcss issue.
+
+## Branches
+
+| Branch | Description |
+| --- | --- |
+| `main` | No shadcn, no prefix. Functionality works, but styling is off. |
+| `with-shadcn` | Shadcn theming added. Styling looks correct - this is the ideal state. No prefix. |
+| `with-prefix` | Tailwind `tw` prefix added on top of the shadcn branch. All styling broken. |
+
+## Screenshots
+
+### `main` - without shadcn, without prefix
+
+![without shadcn or prefix](public/images/without-shadcn-without-prefix.png)
+
+### `with-shadcn` - ideal styling
+
+![with shadcn theming](public/images/with-shadcn.png)
+
+### `with-prefix` - all styling broken
+
+![with prefix](public/images/with-prefix.png)
+
+## Important: Clear Cache After Branch Switches
+
+Next.js caches CSS in `.next`. After switching branches, delete it before running the dev server - otherwise you'll see stale styles from the previous branch:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+rm -rf .next
+bun run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
